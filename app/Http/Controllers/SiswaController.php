@@ -88,7 +88,7 @@ class SiswaController extends Controller
             'id_orangtua' => 'required|exists:orangtuas,id_orangtua'
         ]);
 
-        Siswa::update([
+        $siswa->update([
             'nama' => $request->nama,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,

@@ -50,7 +50,7 @@
             <option value=""></option>
 
             @foreach ($orangtua as $ort)
-                <option value="{{ $ort->id_orangtua }}">
+                <option value="{{ $ort->id_orangtua }}" {{ old('id_orangtua', $siswa->id_orangtua) == $ort->id_orangtua ? 'selected' : '' }}>
                     {{ $ort->nama }}
                 </option>
             @endforeach
