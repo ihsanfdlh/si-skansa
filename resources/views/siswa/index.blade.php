@@ -3,6 +3,9 @@
 @section('content')
 <h1>Data Siswa</h1>
 <a href="{{ route('siswa.create') }}">Tambah Siswa</a>
+@if (session('success'))
+    <p>{{ session('success') }}</p>
+@endif
 <table border=1>
     <tr>
         <th>No</th>
@@ -32,14 +35,14 @@
             <td><form action="{{ route('siswa.destroy', $siswa->id_siswa) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Hapus</button>
+                <button type="submit" onclick="return confirm('Yakin ingin menghapus data {{ $siswa->nama }}?')">Hapus</button>
             </form>
             </td>
         </tr>
     @empty
         <tr>
-            <td colspan="9">
-                <p>Data orang tua masih kosong</p>
+            <td colspan="10">
+                <p>Data siswa masih kosong</p>
             </td>
         </tr>
     @endforelse

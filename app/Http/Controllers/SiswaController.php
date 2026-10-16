@@ -52,7 +52,8 @@ class SiswaController extends Controller
             'no_telp' => $request->no_telp,
             'id_orangtua' => $request->id_orangtua,
         ]);
-        return redirect()->route('siswa.index');
+        return redirect()->route('siswa.index')
+        ->with ('success','Data berhasil di tambahkan');
     }
 
     /**
@@ -98,7 +99,8 @@ class SiswaController extends Controller
             'no_telp' => $request->no_telp,
             'id_orangtua' => $request->id_orangtua,
         ]);
-        return redirect()->route('siswa.index');
+        return redirect()->route('siswa.index')
+        ->with('success','Data berhasil di ubah');
     }
 
     /**
@@ -106,6 +108,8 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        //
+        $siswa->delete();
+        return redirect()->route('siswa.index')
+        ->with('success','Data berhasil di hapus');
     }
 }
