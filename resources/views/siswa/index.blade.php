@@ -6,6 +6,11 @@
 @if (session('success'))
     <p>{{ session('success') }}</p>
 @endif
+@if (session()->has('error'))
+<div class="alert alert-error">
+    {{ session()->get('error') }}
+</div>
+@endif
 <table border=1>
     <tr>
         <th>No</th>
