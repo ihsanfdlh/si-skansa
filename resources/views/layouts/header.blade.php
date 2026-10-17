@@ -10,6 +10,7 @@
     <header>
         <a href="{{ route('siswa.index') }}">Siswa</a>
         <a href="{{ route('orangtua.index') }}">Orang Tua</a>
+        <a href="{{ route('guru.index') }}">Guru</a>
         {{-- <a href="{{ route('orangtua.index') }}">Orang Tua</a> --}}
     </header>
     <!-- Isi Halaman -->
