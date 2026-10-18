@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Jurusan extends Model
 {
@@ -27,5 +28,10 @@ class Jurusan extends Model
     public function kelas()
     {
         return $this->hasMany(Kelas::class, 'id_jurusan', 'id_jurusan');
+    }
+
+    public function mataPelajaran(): HasMany
+    {
+        return $this->hasMany(MataPelajaran::class, 'id_jurusan', 'id_jurusan');
     }
 }

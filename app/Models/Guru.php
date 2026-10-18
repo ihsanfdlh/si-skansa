@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Guru extends Model
 {
@@ -25,5 +26,10 @@ class Guru extends Model
     public function kelas()
     {
         return $this->hasMany(Kelas::class, 'id_walikelas', 'id_guru');
+    }
+
+    public function pengajaran(): HasMany
+    {
+        return $this->hasMany(Pengajaran::class, 'id_guru', 'id_guru');
     }
 }

@@ -183,6 +183,36 @@
                 @endif
             </a>
 
+            <!-- Link: Pengajaran -->
+            @php $isPengajaran = request()->routeIs('pengajaran.*'); @endphp
+            <a href="{{ route('pengajaran.index') }}"
+               class="group flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 {{ $isPengajaran ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25' : 'text-slate-300 hover:text-white hover:bg-slate-800/70' }}">
+                <div class="p-1.5 rounded-lg {{ $isPengajaran ? 'bg-white/20 text-white' : 'text-cyan-400 bg-slate-800/80 group-hover:bg-slate-700/80 group-hover:text-cyan-300' }} transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5 5.755 5 4.168 5.477 3 6.253v13C4.168 18.477 5.755 18 7.5 18c1.746 0 3.332.477 4.5 1.253m0-13C13.168 5.477 14.755 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.245 18 16.5 18c-1.745 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <span>Pengajaran</span>
+                @if($isPengajaran)
+                    <span class="ml-auto w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                @endif
+            </a>
+
+            <!-- Link: Nilai -->
+            @php $isNilai = request()->routeIs('nilai.*'); @endphp
+            <a href="{{ route('nilai.index') }}"
+               class="group flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 {{ $isNilai ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25' : 'text-slate-300 hover:text-white hover:bg-slate-800/70' }}">
+                <div class="p-1.5 rounded-lg {{ $isNilai ? 'bg-white/20 text-white' : 'text-violet-400 bg-slate-800/80 group-hover:bg-slate-700/80 group-hover:text-violet-300' }} transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <span>Data Nilai</span>
+                @if($isNilai)
+                    <span class="ml-auto w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                @endif
+            </a>
+
             <!-- Link: Orang Tua -->
             @php $isOrangtua = request()->routeIs('orangtua.*'); @endphp
             <a href="{{ route('orangtua.index') }}" 

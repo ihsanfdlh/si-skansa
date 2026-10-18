@@ -12,7 +12,7 @@ class MataPelajaran extends Model
     protected $primaryKey = 'id_mapel';
 
     protected $fillable = [
-        'kode_mapel'
+        'kode_mapel',
         'nama_mapel',
         'kelompok',
         'id_jurusan',
