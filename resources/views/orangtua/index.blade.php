@@ -40,7 +40,7 @@
         </tr>
     @empty
         <tr>
-            <td colspan="5">
+            <td colspan="6">
                 <p>Data orang tua masih kosong</p>
             </td>
         </tr>

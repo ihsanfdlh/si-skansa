@@ -18,4 +18,8 @@ class Guru extends Model
         'alamat',
         'no_telp',
     ];
+    public function jurusan()
+    {
+        return $this->hasOne(Jurusan::class, 'id_kepalajurusan', 'id_guru');
+    }
 }
