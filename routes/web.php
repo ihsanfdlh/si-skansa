@@ -17,6 +17,10 @@ Route::resource('/orangtua', OrangtuaController::class);
 
 Route::resource('/guru', GuruController::class);
 
-route::resource('/jurusan', JurusanController::class);
+Route::resource('/jurusan', JurusanController::class);
 
-Route::resource('/kelas', KelasController::class);
+Route::resource('/kelas', KelasController::class)->parameters(['kelas' => 'kelas']);
+
+// Manajemen Siswa dalam Kelas (Sesuai Jurusan)
+Route::post('/kelas/{kelas}/siswa', [KelasController::class, 'addSiswa'])->name('kelas.add-siswa');
+Route::delete('/kelas/{kelas}/siswa/{siswa}', [KelasController::class, 'removeSiswa'])->name('kelas.remove-siswa');

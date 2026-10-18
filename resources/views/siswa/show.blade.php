@@ -55,6 +55,36 @@
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <!-- Jurusan Siswa -->
+                <div class="p-4 rounded-2xl bg-purple-50/70 border border-purple-100">
+                    <div class="text-xs text-purple-700 font-bold uppercase tracking-wider mb-1">Jurusan / Program Keahlian</div>
+                    <div class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                        @if($siswa->jurusan)
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-purple-600 text-white font-mono">
+                                {{ $siswa->jurusan->kode_jurusan ?? '-' }}
+                            </span>
+                            <span>{{ $siswa->jurusan->nama }}</span>
+                        @else
+                            <span class="text-slate-400 italic">Belum diatur</span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Kelas Siswa -->
+                <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-100">
+                    <div class="text-xs text-amber-700 font-bold uppercase tracking-wider mb-1">Kelas / Rombel</div>
+                    <div class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                        @if($siswa->kelas)
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-500 text-white">
+                                {{ $siswa->kelas->nama_kelas }}
+                            </span>
+                            <span class="text-xs text-slate-500">(Tingkat {{ $siswa->kelas->tingkat }})</span>
+                        @else
+                            <span class="text-slate-400 italic">Belum terdaftar di kelas manapun</span>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
                     <div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Tempat, Tanggal Lahir</div>
                     <div class="text-sm font-semibold text-slate-800">{{ $siswa->tempat_lahir }}, {{ $siswa->tanggal_lahir }}</div>

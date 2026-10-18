@@ -182,6 +182,60 @@
                     @enderror
                 </div>
 
+                <!-- Pilihan Jurusan -->
+                <div class="space-y-1.5">
+                    <label for="id_jurusan" class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Jurusan / Program Keahlian
+                    </label>
+                    <div class="relative">
+                        <select id="id_jurusan" 
+                                name="id_jurusan" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-2xs appearance-none @error('id_jurusan') border-rose-400 bg-rose-50/30 @enderror">
+                            <option value="">-- Pilih Jurusan Siswa --</option>
+                            @foreach ($jurusan as $jrs)
+                                <option value="{{ $jrs->id_jurusan }}" {{ old('id_jurusan') == $jrs->id_jurusan ? 'selected' : '' }}>
+                                    {{ $jrs->kode_jurusan ? '[' . $jrs->kode_jurusan . '] ' : '' }}{{ $jrs->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    @error('id_jurusan')
+                        <p class="text-xs text-rose-500 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Pilihan Kelas (Opsional) -->
+                <div class="space-y-1.5 md:col-span-2">
+                    <label for="id_kelas" class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Kelas (Opsional - Siswa juga dapat ditambahkan langsung dari halaman Kelas)
+                    </label>
+                    <div class="relative">
+                        <select id="id_kelas" 
+                                name="id_kelas" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-2xs appearance-none @error('id_kelas') border-rose-400 bg-rose-50/30 @enderror">
+                            <option value="">-- Belum Ditentukan / Masuk Nanti --</option>
+                            @foreach ($kelas as $kls)
+                                <option value="{{ $kls->id_kelas }}" {{ old('id_kelas') == $kls->id_kelas ? 'selected' : '' }}>
+                                    {{ $kls->nama_kelas }} (Tingkat {{ $kls->tingkat }} - {{ $kls->jurusan->nama ?? 'Umum' }})
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    @error('id_kelas')
+                        <p class="text-xs text-rose-500 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Alamat Lengkap -->
                 <div class="md:col-span-2 space-y-1.5">
                     <label for="alamat" class="block text-xs font-bold uppercase tracking-wider text-slate-700">

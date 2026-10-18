@@ -101,6 +101,7 @@
                         <th class="py-3.5 px-6">Tingkat</th>
                         <th class="py-3.5 px-6">Jurusan</th>
                         <th class="py-3.5 px-6">Wali Kelas</th>
+                        <th class="py-3.5 px-6 text-center">Jumlah Siswa</th>
                         <th class="py-3.5 px-6">Tahun Ajaran</th>
                         <th class="py-3.5 px-6 text-center w-36">Aksi</th>
                     </tr>
@@ -116,9 +117,9 @@
                                     <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center font-bold text-xs shrink-0">
                                         {{ substr($kss->nama_kelas, 0, 3) }}
                                     </div>
-                                    <span class="font-bold text-slate-800 group-hover:text-amber-600 transition-colors">
+                                    <a href="{{ route('kelas.show', $kss->id_kelas) }}" class="font-bold text-slate-800 hover:text-orange-600 transition-colors">
                                         {{ $kss->nama_kelas }}
-                                    </span>
+                                    </a>
                                 </div>
                             </td>
                             <td class="py-4 px-6">
@@ -127,19 +128,31 @@
                                 </span>
                             </td>
                             <td class="py-4 px-6">
-                                <span class="font-medium text-slate-700">
-                                    {{ $kss->jurusan }}
-                                </span>
+                                @if($kss->jurusan)
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200 font-mono">
+                                        {{ $kss->jurusan->kode_jurusan ? '[' . $kss->jurusan->kode_jurusan . '] ' : '' }}{{ $kss->jurusan->nama }}
+                                    </span>
+                                @else
+                                    <span class="text-xs text-slate-400 italic">Umum</span>
+                                @endif
                             </td>
                             <td class="py-4 px-6">
                                 <div class="flex items-center gap-2">
                                     <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold flex items-center justify-center">
-                                        {{ strtoupper(substr($kss->walikelas ?? 'W', 0, 1)) }}
+                                        {{ strtoupper(substr($kss->guru->nama ?? $kss->walikelas ?? 'W', 0, 1)) }}
                                     </div>
                                     <span class="text-slate-700 font-medium">
-                                        {{ $kss->walikelas ?? '-' }}
+                                        {{ $kss->guru->nama ?? $kss->walikelas ?? '-' }}
                                     </span>
                                 </div>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <a href="{{ route('kelas.show', $kss->id_kelas) }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {{ $kss->siswa->count() > 0 ? 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100' : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                    </svg>
+                                    <span>{{ $kss->siswa->count() }} Siswa</span>
+                                </a>
                             </td>
                             <td class="py-4 px-6 text-xs text-slate-500 font-medium">
                                 {{ $kss->tahun_ajaran }}

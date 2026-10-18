@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_kelas');
             $table->string('nama_kelas', 20)->nullable()->unique();
             $table->string('tingkat', 5);
-            $table->string('tahun_ajaran', 4);
+            $table->string('tahun_ajaran', 10);
             $table->foreignId('id_jurusan')
                 ->constrained(
                     table: 'jurusans',

@@ -138,14 +138,39 @@
                 <!-- Walikelas -->
                 <div class="space-y-1.5">
                     <label for="id_walikelas" class="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                        Wali Kelas
+                        Wali Kelas (Dewan Guru) <span class="text-rose-500">*</span>
                     </label>
-                    <input id="id_walikelas" 
-                           type="text" 
-                           name="id_walikelas" 
-                           value="{{ old('id_walikelas') }}" 
-                           placeholder="Nama atau ID Wali Kelas" 
-                           class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-2xs">
+                    @if(isset($guru) && count($guru) > 0)
+                        <div class="relative">
+                            <select id="id_walikelas" 
+                                    name="id_walikelas" 
+                                    required
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-2xs appearance-none @error('id_walikelas') border-rose-400 bg-rose-50/30 @enderror">
+                                <option value="">-- Pilih Guru Sebagai Wali Kelas --</option>
+                                @foreach ($guru as $g)
+                                    <option value="{{ $g->id_guru }}" {{ old('id_walikelas') == $g->id_guru ? 'selected' : '' }}>
+                                        {{ $g->nama }} (NIP: {{ $g->nip ?? '-' }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                    @else
+                        <input id="id_walikelas" 
+                               type="text" 
+                               name="id_walikelas" 
+                               value="{{ old('id_walikelas') }}" 
+                               placeholder="ID Guru Wali Kelas" 
+                               required
+                               class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-2xs">
+                    @endif
+                    @error('id_walikelas')
+                        <p class="text-xs text-rose-500 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
 
             </div>

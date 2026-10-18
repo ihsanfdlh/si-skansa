@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orangtua;
+use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class SiswaController extends Controller
      */
     public function index()
     {   
-        $siswa = Siswa::with("orangtua")->get();
+        $siswa = Siswa::with(['orangtua', 'jurusan', 'kelas'])->get();
         return view('siswa.index', compact('siswa'));
     }
 
@@ -23,7 +25,9 @@ class SiswaController extends Controller
     public function create()
     {   
         $orangtua = Orangtua::all();
-        return view('siswa.create', compact('orangtua'));
+        $jurusan = Jurusan::all();
+        $kelas = Kelas::all();
+        return view('siswa.create', compact('orangtua', 'jurusan', 'kelas'));
     }
 
     /**
@@ -32,14 +36,16 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'tempat_lahir' => 'required',
+            'nama' => 'required|string|max:50',
+            'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'alamat' => 'required',
-            'no_telp',
-            'id_orangtua' => 'required|exists:orangtuas,id_orangtua'
+            'agama' => 'required|string|max:20',
+            'alamat' => 'required|string',
+            'no_telp' => 'nullable|string|max:20',
+            'id_orangtua' => 'required|exists:orangtuas,id_orangtua',
+            'id_jurusan' => 'nullable|exists:jurusans,id_jurusan',
+            'id_kelas' => 'nullable|exists:kelas,id_kelas',
         ]);
 
         Siswa::create([
@@ -51,9 +57,12 @@ class SiswaController extends Controller
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
             'id_orangtua' => $request->id_orangtua,
+            'id_jurusan' => $request->id_jurusan,
+            'id_kelas' => $request->id_kelas,
         ]);
+
         return redirect()->route('siswa.index')
-        ->with ('success','Data berhasil di tambahkan');
+            ->with('success', 'Data siswa berhasil ditambahkan');
     }
 
     /**
@@ -61,7 +70,7 @@ class SiswaController extends Controller
      */
     public function show(Siswa $siswa)
     {
-        $siswa->load('orangtua');
+        $siswa->load(['orangtua', 'jurusan', 'kelas']);
         return view('siswa.show', compact('siswa'));
     }
 
@@ -71,7 +80,9 @@ class SiswaController extends Controller
     public function edit(Siswa $siswa)
     {
         $orangtua = Orangtua::all();
-        return view('siswa.edit', compact('orangtua','siswa'));
+        $jurusan = Jurusan::all();
+        $kelas = Kelas::all();
+        return view('siswa.edit', compact('orangtua', 'jurusan', 'kelas', 'siswa'));
     }
 
     /**
@@ -80,14 +91,16 @@ class SiswaController extends Controller
     public function update(Request $request, Siswa $siswa)
     {
         $request->validate([
-            'nama' => 'required',
-            'tempat_lahir' => 'required',
+            'nama' => 'required|string|max:50',
+            'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'alamat' => 'required',
-            'no_telp',
-            'id_orangtua' => 'required|exists:orangtuas,id_orangtua'
+            'agama' => 'required|string|max:20',
+            'alamat' => 'required|string',
+            'no_telp' => 'nullable|string|max:20',
+            'id_orangtua' => 'required|exists:orangtuas,id_orangtua',
+            'id_jurusan' => 'nullable|exists:jurusans,id_jurusan',
+            'id_kelas' => 'nullable|exists:kelas,id_kelas',
         ]);
 
         $siswa->update([
@@ -99,9 +112,12 @@ class SiswaController extends Controller
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
             'id_orangtua' => $request->id_orangtua,
+            'id_jurusan' => $request->id_jurusan,
+            'id_kelas' => $request->id_kelas,
         ]);
+
         return redirect()->route('siswa.index')
-        ->with('success','Data berhasil di ubah');
+            ->with('success', 'Data siswa berhasil diperbarui');
     }
 
     /**
@@ -111,6 +127,6 @@ class SiswaController extends Controller
     {
         $siswa->delete();
         return redirect()->route('siswa.index')
-        ->with('success','Data berhasil di hapus');
+            ->with('success', 'Data siswa berhasil dihapus');
     }
 }

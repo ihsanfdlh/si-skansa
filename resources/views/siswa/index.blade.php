@@ -98,9 +98,9 @@
                     <tr class="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
                         <th class="py-3.5 px-6 w-14 text-center">No</th>
                         <th class="py-3.5 px-6">Nama Siswa</th>
-                        <th class="py-3.5 px-6">Tempat & Tgl Lahir</th>
+                        <th class="py-3.5 px-6">Jurusan</th>
+                        <th class="py-3.5 px-6">Kelas</th>
                         <th class="py-3.5 px-6">L/P</th>
-                        <th class="py-3.5 px-6">Agama</th>
                         <th class="py-3.5 px-6">Orang Tua</th>
                         <th class="py-3.5 px-6">No. Telepon</th>
                         <th class="py-3.5 px-6 text-center w-36">Aksi</th>
@@ -121,21 +121,34 @@
                                         <div class="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
                                             {{ $item->nama }}
                                         </div>
-                                        <div class="text-xs text-slate-400 truncate max-w-xs">{{ $item->alamat ?? 'Alamat belum diisi' }}</div>
+                                        <div class="text-xs text-slate-400 truncate max-w-xs">{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="py-4 px-6 text-slate-600 text-xs">
-                                <div class="font-medium text-slate-700">{{ $item->tempat_lahir }}</div>
-                                <div class="text-slate-400">{{ $item->tanggal_lahir }}</div>
+                            <td class="py-4 px-6">
+                                @if($item->jurusan)
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200 font-mono" title="{{ $item->jurusan->nama }}">
+                                        {{ $item->jurusan->kode_jurusan ?? substr($item->jurusan->nama, 0, 6) }}
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium text-slate-400 bg-slate-100">
+                                        Belum Diatur
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="py-4 px-6">
+                                @if($item->kelas)
+                                    <a href="{{ route('kelas.show', $item->kelas->id_kelas) }}" class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 transition-colors">
+                                        {{ $item->kelas->nama_kelas }}
+                                    </a>
+                                @else
+                                    <span class="text-xs text-slate-400 italic">Belum Ada Kelas</span>
+                                @endif
                             </td>
                             <td class="py-4 px-6">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold {{ in_array(strtoupper($item->jenis_kelamin), ['L', 'LAKI-LAKI']) ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-pink-50 text-pink-700 border border-pink-200' }}">
                                     {{ $item->jenis_kelamin }}
                                 </span>
-                            </td>
-                            <td class="py-4 px-6 text-slate-600 text-xs font-medium">
-                                {{ $item->agama }}
                             </td>
                             <td class="py-4 px-6">
                                 <div class="flex items-center gap-2">
