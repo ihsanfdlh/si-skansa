@@ -12,6 +12,7 @@
         <a href="{{ route('orangtua.index') }}">Orang Tua</a>
         <a href="{{ route('guru.index') }}">Guru</a>
         <a href="{{ route('jurusan.index') }}">Jurusan</a>
+        <a href="{{ route('kelas.index') }}">Kelas</a>
     </header>
     <!-- Isi Halaman -->
     <main class="main">
