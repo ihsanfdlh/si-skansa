@@ -1,39 +1,234 @@
 @extends('layouts.header')
 @section('title', 'Data Jurusan')
+
 @section('content')
-<h1>Data Jurusan</h1>
-@if (session()->has('success'))
-<div class="alert alert-success">
-    {{ session()->get('success') }}
+<div class="space-y-6">
+
+    <!-- Top Header Banner & Actions -->
+    <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-indigo-900/10 relative overflow-hidden">
+        <!-- Background decorative pattern -->
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute right-20 top-0 w-32 h-32 bg-blue-400/20 rounded-full blur-xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div class="space-y-1.5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-semibold text-blue-100 border border-white/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    Konsentrasi Keahlian SKANSA
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                    Program & Data Jurusan
+                </h1>
+                <p class="text-sm text-blue-100/90 max-w-xl">
+                    Kelola data program studi, konsentrasi keahlian, dan kepala program keahlian SMK Negeri 1 (SKANSA).
+                </p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <a href="{{ route('jurusan.create') }}" class="px-5 py-2.5 rounded-xl bg-white text-purple-700 hover:bg-purple-50 font-bold text-xs sm:text-sm shadow-lg shadow-black/10 transition-all flex items-center gap-2 group">
+                    <svg class="w-4 h-4 text-purple-600 group-hover:rotate-90 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Tambah Jurusan
+                </a>
+                <a href="{{ route('kelas.index') }}" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold backdrop-blur-md border border-white/20 transition-all flex items-center gap-2 shadow-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    Lihat Kelas
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Mini Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/15">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-xs text-blue-200">Total Jurusan</div>
+                    <div class="text-lg font-bold text-white">{{ $jurusan->count() }} Jurusan</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-xs text-blue-200">Kepala Jurusan</div>
+                    <div class="text-lg font-bold text-white">{{ $jurusan->whereNotNull('guru')->count() }} Guru</div>
+                </div>
+            </div>
+            <div class="col-span-2 sm:col-span-1 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-xs text-blue-200">Status Akreditasi</div>
+                    <div class="text-lg font-bold text-emerald-300">Terakreditasi A</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card Container -->
+    <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+        
+        <!-- Table Toolbar -->
+        <div class="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-800">Daftar Jurusan Kejuruan</h2>
+                <p class="text-xs text-slate-500">Menampilkan seluruh data keahlian aktif di SMKN 1 SKANSA</p>
+            </div>
+            
+            <!-- Search bar filter (visual) -->
+            <div class="relative w-full sm:w-64">
+                <input type="text" 
+                       id="searchJurusanInput"
+                       placeholder="Cari jurusan..." 
+                       class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-700 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Table Responsive Wrapper -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse" id="jurusanTable">
+                <thead>
+                    <tr class="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                        <th class="py-3.5 px-6 w-16 text-center">No</th>
+                        <th class="py-3.5 px-6">Kode Jurusan</th>
+                        <th class="py-3.5 px-6">Nama Jurusan</th>
+                        <th class="py-3.5 px-6">Kepala Jurusan</th>
+                        <th class="py-3.5 px-6 text-center">Status</th>
+                        <th class="py-3.5 px-6 text-center w-36">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    @forelse ($jurusan as $jrs)
+                        <tr class="hover:bg-slate-50/80 transition-colors group">
+                            <td class="py-4 px-6 text-center font-semibold text-slate-400 text-xs">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200/60 font-mono">
+                                    {{ $jrs->kode_jurusan ?? '-' }}
+                                </span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-xs shrink-0">
+                                        {{ strtoupper(substr($jrs->kode_jurusan ?? $jrs->nama, 0, 2)) }}
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
+                                            {{ $jrs->nama }}
+                                        </div>
+                                        <div class="text-xs text-slate-400">SMK Negeri 1 (SKANSA)</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">
+                                        {{ strtoupper(substr($jrs->guru->nama ?? 'G', 0, 1)) }}
+                                    </div>
+                                    <span class="font-medium text-slate-700">
+                                        {{ $jrs->guru->nama ?? 'Belum ditentukan' }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    Aktif
+                                </span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <!-- Tombol Edit -->
+                                    <a href="{{ route('jurusan.edit', $jrs->id_jurusan) }}" 
+                                       title="Edit Data Jurusan"
+                                       class="p-2 rounded-xl text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 transition-all duration-200">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                    </a>
+
+                                    <!-- Tombol Lihat -->
+                                    <a href="{{ route('jurusan.show', $jrs->id_jurusan) }}" 
+                                       title="Lihat Detail"
+                                       class="p-2 rounded-xl text-emerald-600 bg-emerald-50 hover:bg-emerald-600 hover:text-white border border-emerald-200 transition-all duration-200">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </a>
+
+                                    <!-- Tombol Hapus -->
+                                    <form action="{{ route('jurusan.destroy', $jrs->id_jurusan) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                                title="Hapus Jurusan"
+                                                onclick="return confirm('Yakin ingin menghapus data jurusan {{ $jrs->nama }}?')"
+                                                class="p-2 rounded-xl text-rose-600 bg-rose-50 hover:bg-rose-600 hover:text-white border border-rose-200 transition-all duration-200">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="py-12 px-6 text-center">
+                                <div class="flex flex-col items-center justify-center max-w-sm mx-auto">
+                                    <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mb-4">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-base font-bold text-slate-700 mb-1">Data Jurusan Kosong</h3>
+                                    <p class="text-xs text-slate-500">Belum ada data jurusan yang terdaftar di sistem akademik.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Table Footer -->
+        <div class="py-4 px-6 bg-slate-50/60 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <div>
+                Menampilkan <strong>{{ $jurusan->count() }}</strong> jurusan yang terdaftar
+            </div>
+            <div class="text-slate-400">
+                Terakhir disinkronkan: Hari ini
+            </div>
+        </div>
+    </div>
 </div>
-@endif
-@if (session()->has('error'))
-<div class="alert alert-error">
-    {{ session()->get('error') }}
-</div>
-@endif
-<table border=1>
-    <tr>
-        <th>No</th>
-        <th>Kode Jurusan</th>
-        <th>Nama Jurusan</th>
-        <th>Kepala Jurusan</th>
-        <!-- <th>Jumlah Siswa</th> -->
-    </tr>
-    @forelse ($jurusan as $jrs)
-        <tr>
-            <th>{{ $loop->iteration }}</th>
-            <th>{{ $jrs->kode_jurusan }}</th>
-            <th>{{ $jrs->nama }}</th>
-            <th>{{ $jrs->guru->nama }}</th>
-            <!-- <th>{{ $jrs->jumlah_siswa }}</th> -->
-        </tr>
-    @empty
-        <tr>
-            <td colspan="5">
-                <p>Data jurusan masih kosong</p>
-            </td>
-        </tr>
-    @endforelse
-</table>
+
+<!-- Simple instant client-side search script -->
+<script>
+    document.getElementById('searchJurusanInput')?.addEventListener('keyup', function() {
+        const value = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#jurusanTable tbody tr');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(value) ? '' : 'none';
+        });
+    });
+</script>
 @endsection

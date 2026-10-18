@@ -61,7 +61,8 @@ class SiswaController extends Controller
      */
     public function show(Siswa $siswa)
     {
-        //
+        $siswa->load('orangtua');
+        return view('siswa.show', compact('siswa'));
     }
 
     /**

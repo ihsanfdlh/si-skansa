@@ -50,7 +50,7 @@ class OrangtuaController extends Controller
      */
     public function show(Orangtua $orangtua)
     {
-        //
+        return view('orangtua.show', compact('orangtua'));
     }
 
     /**
